@@ -1,4 +1,4 @@
-# 🚀 Installation Guide - JM-NPCRoadRage v1.1.0
+# 🚀 Installation Guide - JM-NPCRoadRage v1.0.0
 
 <div align="center">
 
@@ -460,7 +460,7 @@ Config.MaxRageNPCs = 10      -- Allow more NPCs
 <details>
 <summary>🏥 <strong>Injury system not working</strong></summary>
 
-**Status:** ✅ **Improved in v1.1.0**
+**Status:** ✅ **Improved in v1.0.0**
 
 **New Health-Based System:**
 - Injuries only trigger when player actually takes damage
@@ -482,7 +482,7 @@ Config.MaxRageNPCs = 10      -- Allow more NPCs
 <details>
 <summary>📝 <strong>Discord logging issues</strong></summary>
 
-**Status:** ✅ **Enhanced in v1.1.0**
+**Status:** ✅ **Enhanced in v1.0.0**
 
 **New Anti-Spam Features:**
 - Cooldown timers between logs
