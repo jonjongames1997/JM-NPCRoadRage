@@ -1,665 +1,909 @@
-A premium FiveM script that adds intelligent NPC road rage reactions to aggressive driving, featuring QBCore integration, realistic combat escalation, and comprehensive safety systems.
-
-# 🚀 Installation Guide - JM-NPCRoadRage v1.0.0
+# 🚗💥 JM-NPCRoadRage - Advanced FiveM Road Rage System
 
 <div align="center">
 
-[![Installation](https://img.shields.io/badge/Difficulty-Easy-green.svg)](https://github.com/your-repo)
-[![Time](https://img.shields.io/badge/Setup_Time-10_minutes-blue.svg)](#quick-setup)
-[![Support](https://img.shields.io/badge/Support-Available-purple.svg)](#-support--troubleshooting)
+[![FiveM](https://img.shields.io/badge/FiveM-Script-blue.svg)](https://fivem.net/)
+[![QBCore](https://img.shields.io/badge/QBCore-Compatible-green.svg)](https://github.com/qbcore-framework)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-1.0.0-purple.svg)](#changelog)
+[![Downloads](https://img.shields.io/github/downloads/jmmodifications/jm-npcroadvage/total.svg)](https://github.com/jmmodifications/jm-npcroadvage/releases)
+[![Stars](https://img.shields.io/github/stars/jmmodifications/jm-npcroadvage.svg)](https://github.com/jmmodifications/jm-npcroadvage/stargazers)
 
-*Complete installation guide for the advanced FiveM road rage system*
+**Transform your FiveM server with realistic NPC road rage interactions**
+
+*Bring authentic street-level aggression and unpredictable encounters to your roleplay experience*
+
+[🚀 **Quick Start**](#-quick-installation) • [📖 **Documentation**](#-documentation) • [⚙️ **Features**](#-key-features) • [💬 **Support**](#-support--community)
+
+![Road Rage Demo](https://i.imgur.com/demo-roadrage.gif)
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## 🚀 **Key Features**
 
-- [Prerequisites](#-prerequisites)
-- [Quick Setup](#-quick-setup)
-- [Detailed Installation](#-detailed-installation)
-- [Configuration Guide](#-configuration-guide)
-- [Discord Integration](#-discord-integration)
-- [Testing & Verification](#-testing--verification)
-- [Performance Optimization](#-performance-optimization)
-- [Troubleshooting](#-troubleshooting)
-- [Advanced Setup](#-advanced-setup)
+<table>
+<tr>
+<td width="50%">
 
----
+### 🎮 **Immersive Gameplay**
+- **Dynamic NPC Reactions** - Contextual responses to player actions
+- **Multi-Phase Escalation** - From anger to confrontation to combat
+- **Realistic Audio** - Authentic rage sounds and speech
+- **Smart Animations** - Lifelike gestures and movements
 
-## ✅ Prerequisites
+### 🛡️ **Safety & Balance**
+- **Protected Safe Zones** - Hospitals, police stations stay peaceful
+- **Weapon Blacklist** - Block overpowered weapons (RPGs, explosives)
+- **Health-Based Injuries** - Only trigger when real damage occurs
+- **Configurable Intensity** - Adjust aggression to server preference
 
-### 📦 **Required Dependencies**
+</td>
+<td width="50%">
 
-| Dependency | Version | Status | Download Link |
-|------------|---------|--------|---------------|
-| **QBCore Framework** | v1.0+ | 🔴 **Required** | [GitHub](https://github.com/qbcore-framework/qb-core) |
-| **qb-policejob** | Latest | 🔴 **Required** | [GitHub](https://github.com/qbcore-framework/qb-policejob) |
-| **qb-ambulancejob** | Latest | 🔴 **Required** | [GitHub](https://github.com/qbcore-framework/qb-ambulancejob) |
-| **MySQL Database** | 5.7+ | 🟡 **Optional** | [Installation Guide](https://dev.mysql.com/doc/) |
+### 🔧 **Server Integration**
+- **QBCore Police** - Automatic 911 calls and dispatch
+- **Ambulance System** - Realistic injury and medical response
+- **Discord Logging** - Advanced webhook integration with spam protection
+- **Performance Monitoring** - Built-in optimization and cleanup
 
-### 🔧 **Optional Dependencies**
+### 👨‍💼 **Admin Controls**
+- **Testing Commands** - Trigger events for demonstration
+- **Troll Cop System** - ⚠️ Spawn aggressive cops for entertainment/testing
+- **Real-time Statistics** - Monitor system performance
+- **Hot Configuration** - Update settings without restart
+- **Debug Tools** - Comprehensive troubleshooting
 
-| Dependency | Purpose | Status |
-|------------|---------|--------|
-| **qb-target** | Enhanced interactions | 🟢 **Optional** |
-| **qb-hud** | Stress system integration | 🟢 **Optional** |
-| **Discord Webhook** | Event logging | 🟢 **Recommended** |
-
-### 🖥️ **Server Requirements**
-
-- **FiveM Server Artifacts**: Build 4752 or higher
-- **RAM**: Minimum 4GB (8GB+ recommended)
-- **CPU**: Multi-core processor recommended
-- **OneSync**: Infinity (recommended for best performance)
+</td>
+</tr>
+</table>
 
 ---
 
-## 🚀 Quick Setup
+## 🚀 **Quick Installation**
 
-### ⚡ **5-Minute Installation**
+### **Prerequisites** (Takes 2 minutes)
+- ✅ QBCore Framework
+- ✅ qb-policejob  
+- ✅ qb-ambulancejob
+
+### **Installation** (Takes 3 minutes)
 
 ```bash
-# 1. Navigate to your resources folder
-cd /path/to/your/fivem/server/resources
+# 1. Download and extract to resources folder
+Purchase the script from https://jm-modifications.tebex.io/ then download it from your CFX Portal Granted assets at https://portal.cfx.re/assets/granted-assets
 
-# 2. Clone or download the script
-git clone https://github.com/your-repo/JM-NPCRoadRage.git
-
-# 3. Add to server.cfg
+# 2. Add to server.cfg
 echo "ensure JM-NPCRoadRage" >> server.cfg
 
-# 4. Restart your server
-# Script is now ready with default settings!
+# 3. Restart your server
+# You're done! 🎉
 ```
 
-### 🎯 **Default Configuration**
-The script comes pre-configured with balanced settings:
-- **Road Rage Chance**: 15% trigger rate
-- **Injury Chance**: 30% when hit
-- **Max Concurrent NPCs**: 5
-- **Safe Zones**: Hospital, Police Station, Airport
+> 📋 **[Complete Installation Guide](INSTALL.md)** - Detailed setup with screenshots and troubleshooting
 
 ---
 
-## 📖 Detailed Installation
+## 📖 **Documentation**
 
-### 📁 **Step 1: File Setup**
+### 🎮 **Admin Commands**
 
-1. **Download the Script**
-   ```bash
-   # Option A: Git Clone (recommended)
-   git clone https://github.com/your-repo/JM-NPCRoadRage.git
-   
-   # Option B: Manual Download
-   # Download ZIP and extract to resources folder
-   ```
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/testrage` | Trigger road rage for testing | Test with nearby NPC |
+| `/clearrage` | Clear all active road rage NPCs | Stop all current incidents |
+| `/npcrage-stats` | View system statistics | Monitor performance |
+| `/weaponinfo` | Show weapon configuration | Check blacklist status |
+| `/trollcops` | **🚨 Trigger troll cops (Admin Only)** | Spawn aggressive cops in jurisdiction |
+| `/cleartrollcops` | **🚨 Clear all troll cops** | Remove all spawned troll cops |
+| `/trollcopinfo` | **🚨 Show troll cop status** | View jurisdiction and cooldown info |
 
-2. **Verify File Structure**
-   ```
-   resources/
-   └── JM-NPCRoadRage/
-       ├── fxmanifest.lua
-       ├── config.lua
-       ├── database.sql
-       ├── client/
-       │   └── main.lua
-       ├── server/
-       │   └── main.lua
-       └── locales/
-           └── en.lua
-   ```
+> ⚠️ **Warning**: Troll cop commands are powerful admin tools. Use responsibly for entertainment or testing purposes only.
 
-3. **Check File Permissions**
-   ```bash
-   # Ensure files are readable
-   chmod -R 755 JM-NPCRoadRage/
-   ```
-
-### ⚙️ **Step 2: Server Configuration**
-
-1. **Add to server.cfg**
-   ```cfg
-   # Add this line to your server.cfg
-   ensure JM-NPCRoadRage
-   
-   # Optional: Set debug mode
-   setr jm_npcrage_debug "false"
-   ```
-
-2. **Dependency Order** (Important!)
-   ```cfg
-   # Ensure dependencies load first
-   ensure qb-core
-   ensure qb-policejob
-   ensure qb-ambulancejob
-   
-   # Then load road rage script
-   ensure JM-NPCRoadRage
-   ```
-
-### 🗄️ **Step 3: Database Setup** (Optional)
-
-```sql
--- Import database.sql for incident logging
--- This step is optional but recommended for statistics
-
-USE your_database_name;
-SOURCE database.sql;
-
--- Verify table creation
-SHOW TABLES LIKE 'npc_road_rage_incidents';
-```
-
----
-
-## ⚙️ Configuration Guide
-
-### 🎯 **Basic Configuration**
-
-Edit `config.lua` to customize the experience:
+### ⚙️ **Quick Configuration**
 
 ```lua
--- Basic Behavior Settings
-Config.RoadRageChance = 15        -- 15% chance (1-100)
-Config.AttackChance = 70          -- 70% will attack vs yell
+-- Basic Settings (config.lua)
+Config.RoadRageChance = 15        -- 15% trigger chance
+Config.AttackChance = 70          -- 70% will attack vs yell  
 Config.WeaponChance = 40          -- 40% will use weapons
-Config.InjuryChance = 30          -- 30% injury chance on hit
-Config.FleeChance = 20            -- 20% will flee after rage
+Config.MaxRageNPCs = 5            -- Max 5 concurrent NPCs
 
--- Performance Settings
-Config.MaxRageNPCs = 5            -- Max concurrent NPCs
-Config.TriggerDistance = 20.0     -- Detection radius (meters)
-Config.RageTimeout = 30000        -- 30 seconds before calming down
-
--- Police Integration
-Config.PoliceNotifyChance = 80    -- 80% chance to call police
-Config.MinPoliceOnline = 2        -- Minimum police required
-Config.PoliceJob = 'police'       -- QBCore police job name
-```
-
-### 🚫 **Safe Zone Configuration**
-
-```lua
+-- Safety Settings
 Config.BlacklistedAreas = {
-    -- Default safe zones
     {x = -545.0, y = -204.0, z = 38.0, radius = 100.0}, -- Hospital
-    {x = 440.0, y = -982.0, z = 30.0, radius = 150.0},  -- Police Station
-    {x = -1037.0, y = -2737.0, z = 20.0, radius = 200.0}, -- Airport
-    
-    -- Add your custom safe zones
-    {x = 123.45, y = -678.90, z = 21.0, radius = 75.0},  -- Custom Location
-    {x = -987.65, y = 432.10, z = 15.0, radius = 50.0},  -- Another Location
+    -- Add your safe zones
+}
+
+Config.BlacklistedWeapons = {
+    'WEAPON_RPG',               -- No RPGs
+    'WEAPON_STICKYBOMB',        -- No explosives
+    -- Add dangerous weapons to block
 }
 ```
 
-### 🔫 **Weapon Customization**
+### 🔗 **Discord Integration** (Optional)
 
 ```lua
-Config.RageWeapons = {
-    -- Melee Weapons
-    'WEAPON_KNIFE',
-    'WEAPON_BAT',
-    'WEAPON_CROWBAR',
-    'WEAPON_HAMMER',
-    'WEAPON_MACHETE',
-    
-    -- Firearms (if desired)
-    'WEAPON_PISTOL',
-    'WEAPON_MICROSMG',
-    
-    -- Custom weapons (add your own)
-    'WEAPON_CUSTOM_1',
-    'WEAPON_CUSTOM_2',
-}
-```
-
----
-
-## 🔗 Discord Integration
-
-### 📝 **Setup Discord Logging**
-
-1. **Create Discord Webhook**
-   ```
-   1. Go to your Discord server
-   2. Navigate to channel settings
-   3. Go to Integrations → Webhooks
-   4. Create New Webhook
-   5. Copy the webhook URL
-   ```
-
-2. **Configure Webhook in config.lua**
-   ```lua
-   Config.Discord = {
-       enabled = true,
-       webhook = "https://discord.com/api/webhooks/YOUR_WEBHOOK_URL_HERE",
-       botName = "Road Rage Bot",
-       serverName = "Your Server Name",
-       
-       -- Event Logging
-       logEvents = {
-           roadRageIncidents = true,     -- Log incidents
-           policeNotifications = true,   -- Log police calls
-           playerInjuries = true,        -- Log injuries
-           adminActions = true,          -- Log admin commands
-           systemStats = false           -- Hourly statistics (optional)
-       }
-   }
-   ```
-
-### 🛡️ **Anti-Spam Configuration**
-
-```lua
-Config.Discord.spamPrevention = {
-    enabled = true,                    -- Enable spam prevention
-    cooldownTime = 60000,             -- 60 seconds between similar logs
-    maxLogsPerMinute = 5,             -- Maximum 5 logs per minute per type
-    combineIncidents = true,          -- Combine multiple incidents
-    
-    -- Quiet Hours (Optional)
-    quietHours = {
-        enabled = true,               -- Enable quiet hours
-        startHour = 2,               -- 2 AM start
-        endHour = 8,                 -- 8 AM end
-        reducedTypes = {             -- Reduce these log types during quiet hours
-            "roadRageIncidents",
-            "policeNotifications"
-        }
+Config.Discord = {
+    enabled = true,
+    webhook = "YOUR_WEBHOOK_URL",
+    spamPrevention = {
+        enabled = true,
+        cooldownTime = 60000,      -- 1 minute cooldown
+        maxLogsPerMinute = 5       -- Rate limiting
     }
 }
 ```
 
-### 🎨 **Discord Customization**
+---
 
-```lua
--- Custom colors (decimal format)
-Config.Discord.colors = {
-    incident = 16776960,    -- Orange
-    police = 3447003,       -- Blue
-    injury = 15158332,      -- Red
-    admin = 9442302,        -- Purple
-    system = 65280          -- Green
-}
+## 🎯 **How It Works**
 
--- Role mentions (optional)
-Config.Discord.mentionRoles = {
-    adminRole = "123456789012345678",    -- Admin role ID
-    policeRole = "876543210987654321"    -- Police role ID
-}
+<div align="center">
+
+```mermaid
+graph LR
+    A[Player Drives Aggressively] --> B[NPC Detects Incident]
+    B --> C{Safe Zone?}
+    C -->|Yes| D[No Reaction]
+    C -->|No| E[NPC Gets Angry]
+    E --> F[Exit Vehicle]
+    F --> G[Approach Player]
+    G --> H{Attack or Yell?}
+    H -->|Attack| I[Combat with Weapons]
+    H -->|Yell| J[Verbal Confrontation]
+    I --> K[Police Notification]
+    J --> K
+    K --> L[Timeout & Resolution]
 ```
+
+</div>
+
+### 📊 **System Mechanics**
+
+1. **🔍 Detection** - Monitors collisions and aggressive driving patterns
+2. **🎲 Decision** - NPCs make contextual choices based on configuration
+3. **⚡ Escalation** - Multi-phase response from verbal to physical
+4. **🚨 Integration** - Automatic police and medical system alerts
+5. **🔄 Resolution** - Smart cleanup and timeout management
 
 ---
 
-## 🧪 Testing & Verification
+## 📈 **Performance & Compatibility**
 
-### ✅ **Installation Verification**
+<div align="center">
 
-1. **Check Server Console**
-   ```
-   Look for: "[JM-NPCRoadRage] Server script loaded successfully!"
-   ```
+| Metric | Value | Status |
+|--------|-------|--------|
+| **CPU Impact** | < 0.01ms/tick | 🟢 Excellent |
+| **Memory Usage** | ~2MB | 🟢 Minimal |
+| **Network Traffic** | Event-driven | 🟢 Optimized |
+| **Player Count** | Unlimited | 🟢 Scalable |
 
-2. **In-Game Tests**
-   ```
-   /testrage    # Trigger road rage (admin only)
-   /npcrage-stats   # View system statistics
-   ```
+</div>
 
-3. **F8 Console Check**
-   ```
-   # Should show no errors related to JM-NPCRoadRage
-   # Look for successful resource start message
-   ```
-
-### 🎮 **Functionality Testing**
-
-#### **Road Rage Testing**
-1. **Basic Trigger Test**
-   - Drive into NPC vehicles
-   - Check for NPC reaction
-   - Verify they exit vehicles and approach
-
-2. **Combat System Test**
-   - Let NPC attack you
-   - Check injury system activation
-   - Verify health-based injury detection
-
-3. **Police Integration Test**
-   - Ensure police players are online
-   - Trigger road rage incident
-   - Check for police notification
-
-#### **Admin Command Testing**
-```lua
--- Test all admin commands
-/testrage           -- Should trigger nearby NPC
-/clearrage          -- Should clear all rage NPCs
-/npcrage-stats      -- Should show system info
-/npcrage-toggle     -- Should toggle system on/off
-```
-
-### 📊 **Performance Monitoring**
-
-```lua
--- Monitor server performance
-resmon              # Check resource usage
-perfmon             # Monitor performance metrics
-
--- Expected usage:
--- CPU: < 0.01ms per tick
--- Memory: ~2-5MB
--- Network: Minimal
-```
+### ✅ **Tested Environments**
+- **QBCore** v1.0+ (Primary)
+- **OneSync Infinity** (Recommended)
+- **Windows/Linux** Servers
+- **High Population** Servers (200+ players)
 
 ---
 
-## ⚡ Performance Optimization
-
-### 🚀 **Optimization Settings**
-
-#### **For High-Traffic Servers**
-```lua
--- Reduce frequency and limits
-Config.RoadRageChance = 10        -- Lower trigger rate
-Config.MaxRageNPCs = 3            -- Fewer concurrent NPCs
-Config.TriggerDistance = 15.0     -- Smaller detection radius
-
--- Increase intervals
--- In client/main.lua, change detection interval:
-Wait(2000) -- Instead of Wait(1000)
-```
-
-#### **For Low-Population Servers**
-```lua
--- Increase activity for more engagement
-Config.RoadRageChance = 25        -- Higher trigger rate
-Config.MaxRageNPCs = 8            -- More concurrent NPCs
-Config.AttackChance = 80          -- More aggressive NPCs
-```
-
-### 📈 **Performance Monitoring**
-
-```lua
--- Add performance monitoring (optional)
--- In server.cfg:
-setr jm_npcrage_debug "true"
-setr jm_npcrage_perf_monitor "true"
-
--- Monitor with:
-monitor JM-NPCRoadRage
-```
-
----
-
-## 🔧 Troubleshooting
-
-### ❗ **Common Issues & Solutions**
+## 🛠️ **Advanced Configuration**
 
 <details>
-<summary>🚫 <strong>Script not starting</strong></summary>
+<summary><strong>🔧 Weapon System Configuration</strong></summary>
 
-**Symptoms:**
-- No console message about script loading
-- Admin commands not working
+```lua
+-- Allowed Weapons (NPCs can use these)
+Config.RageWeapons = {
+    'WEAPON_KNIFE',
+    'WEAPON_BAT',
+    'WEAPON_PISTOL',
+    -- Add more weapons
+}
 
-**Solutions:**
-1. Check server.cfg for typos: `ensure JM-NPCRoadRage`
-2. Verify file permissions: `chmod -R 755 JM-NPCRoadRage/`
-3. Check fxmanifest.lua syntax
-4. Ensure QBCore is loaded first
-
-**Debug Commands:**
-```bash
-refresh             # Refresh resources
-start JM-NPCRoadRage # Manual start
-stop JM-NPCRoadRage  # Stop if needed
+-- Blacklisted Weapons (NPCs will never use these)
+Config.BlacklistedWeapons = {
+    'WEAPON_RPG',
+    'WEAPON_MINIGUN',
+    'WEAPON_STICKYBOMB',
+    -- Block dangerous weapons
+}
 ```
 </details>
 
 <details>
-<summary>🤖 <strong>NPCs not responding</strong></summary>
+<summary><strong>🚨 Troll Cop System (Admin Feature)</strong></summary>
 
-**Symptoms:**
-- Collisions don't trigger road rage
-- NPCs remain in vehicles
+```lua
+-- Troll Cop Configuration (ADMIN ONLY - FOR TESTING/ENTERTAINMENT)
+Config.TrollCops = {
+    enabled = false,                -- Enable/disable system
+    triggerChance = 5,             -- 5% chance to trigger automatically
+    
+    -- Define jurisdictions where troll cops can spawn
+    jurisdictions = {
+        {
+            name = "Sandy Shores Sheriff",
+            coords = {x = 1853.0, y = 3686.0, z = 34.0},
+            radius = 500.0,
+            enabled = true
+        },
+        {
+            name = "Paleto Bay Police", 
+            coords = {x = -448.0, y = 6008.0, z = 31.0},
+            radius = 400.0,
+            enabled = true
+        }
+    },
+    
+    -- Behavior settings
+    copCount = {min = 2, max = 4},     -- Number of cops to spawn
+    weapons = {                        -- Weapons they use
+        'WEAPON_PISTOL',
+        'WEAPON_SMG',
+        'WEAPON_CARBINERIFLE'
+    },
+    shootDuration = 15000,             -- 15 seconds of shooting
+    cooldown = 300000,                 -- 5 minute cooldown
+    maxPerSession = 3,                 -- Max 3 events per session
+    
+    -- Admin controls
+    adminOnly = true,                  -- Only admins can trigger manually
+    logToDiscord = true,               -- Log events to Discord
+    warningMessage = "⚠️ TROLL COPS INCOMING! ⚠️"
+}
+```
 
-**Solutions:**
-1. Check if in blacklisted area
+> ⚠️ **Important**: This is a powerful admin feature designed for entertainment/testing. Use responsibly and ensure players understand it's for fun. Can be disabled entirely by setting `enabled = false`.
+
+**Admin Commands:**
+- `/trollcops` - Manually trigger in current jurisdiction
+- `/cleartrollcops` - Remove all active troll cops  
+- `/trollcopinfo` - View status and jurisdictions
+
+</details>
+
+<details>
+<summary><strong>🏥 Health & Injury System</strong></summary>
+
+```lua
+-- Injury Configuration
+Config.InjuryChance = 30          -- 30% chance when hit
+-- Health-based detection (v1.0+)
+-- Only triggers when player actually loses health
+-- Integrates with qb-ambulancejob automatically
+```
+</details>
+
+<details>
+<summary><strong>🚨 Police Integration</strong></summary>
+
+```lua
+-- Police Settings
+Config.PoliceNotifyChance = 80    -- 80% notification rate
+Config.MinPoliceOnline = 2        -- Minimum officers required
+Config.PoliceJob = 'police'       -- Job name in QBCore
+Config.PoliceResponseTime = 120000 -- 2 minute response
+```
+</details>
+
+<details>
+<summary><strong>📊 Discord Logging</strong></summary>
+
+```lua
+-- Advanced Discord Features
+Config.Discord = {
+    enabled = true,
+    webhook = "YOUR_WEBHOOK_URL",
+    
+    -- Anti-Spam System
+    spamPrevention = {
+        enabled = true,
+        cooldownTime = 60000,
+        maxLogsPerMinute = 5,
+        combineIncidents = true,
+        
+        -- Quiet Hours
+        quietHours = {
+            enabled = true,
+            startHour = 2,        -- 2 AM
+            endHour = 8,          -- 8 AM
+        }
+    },
+    
+    -- Event Types
+    logEvents = {
+        roadRageIncidents = true,
+        policeNotifications = true,
+        playerInjuries = true,
+        adminActions = true
+    }
+}
+```
+</details>
+
+---
+
+## 🔍 **Troubleshooting**
+
+### ❓ **Common Questions**
+
+<details>
+<summary><strong>🚫 NPCs not reacting to collisions?</strong></summary>
+
+**Quick Fixes:**
+1. Check if you're in a safe zone (hospital, police station)
 2. Increase `Config.RoadRageChance` for testing
-3. Verify `Config.MaxRageNPCs` not reached
-4. Use `/testrage` to manually trigger
-
-**Debug Steps:**
-```lua
--- Temporarily increase for testing
-Config.RoadRageChance = 100  -- 100% trigger
-Config.MaxRageNPCs = 10      -- Allow more NPCs
-```
-</details>
-
-<details>
-<summary>👮 <strong>Police notifications failing</strong></summary>
-
-**Symptoms:**
-- No police alerts
-- Console shows police notification errors
-
-**Solutions:**
-1. Check `Config.MinPoliceOnline` setting
-2. Verify police job name: `Config.PoliceJob = 'police'`
-3. Ensure qb-policejob is running
-4. Check if police players are on duty
-
-**Verification:**
-```lua
--- Check police count with:
-/npcrage-stats  -- Shows police online count
-```
-</details>
-
-<details>
-<summary>🏥 <strong>Injury system not working</strong></summary>
-
-**Status:** ✅ **Improved in v1.0.0**
-
-**New Health-Based System:**
-- Injuries only trigger when player actually takes damage
-- Real-time health monitoring during combat
-- Server-side health verification
-
-**Solutions:**
-1. Ensure qb-ambulancejob is installed
-2. Check `Config.InjuryChance` setting
-3. Verify player actually took damage
+3. Use `/testrage` command to manually trigger
+4. Verify `Config.MaxRageNPCs` limit not reached
 
 **Debug:**
-```lua
--- Check injury logs in console
--- Should see: "Injury blocked - no health damage detected"
+```cfg
+# Enable debug mode in server.cfg
+setr jm_npcrage_debug "true"
 ```
 </details>
 
 <details>
-<summary>📝 <strong>Discord logging issues</strong></summary>
+<summary><strong>🏥 Injury system not working?</strong></summary>
 
-**Status:** ✅ **Enhanced in v1.0.0**
+**Status:** ✅ **Enhanced in v1.0**
+- New health-based detection system
+- Only triggers when player actually takes damage
+- Integrates automatically with qb-ambulancejob
 
-**New Anti-Spam Features:**
-- Cooldown timers between logs
-- Rate limiting
-- Incident combining
-
-**Solutions:**
-1. Verify webhook URL in config.lua
-2. Check Discord webhook permissions
-3. Test webhook with curl:
-```bash
-curl -X POST "YOUR_WEBHOOK_URL" \
-     -H "Content-Type: application/json" \
-     -d '{"content": "Test message"}'
-```
-
-**Configuration Check:**
-```lua
--- Verify spam prevention settings
-Config.Discord.spamPrevention.enabled = true
-Config.Discord.logEvents.roadRageIncidents = true
-```
+**Verify:**
+1. qb-ambulancejob is installed and running
+2. Player actually lost health during combat
+3. Check `Config.InjuryChance` setting
 </details>
 
-### 🔍 **Advanced Debugging**
+<details>
+<summary><strong>👮 Police not being notified?</strong></summary>
 
-#### **Enable Debug Mode**
-```cfg
-# Add to server.cfg
-setr jm_npcrage_debug "true"
+**Common Causes:**
+- Not enough police online (check `Config.MinPoliceOnline`)
+- Police job name mismatch (verify `Config.PoliceJob`)
+- qb-policejob not running properly
 
-# View detailed logs
-tail -f server.log | grep "JM-NPCRoadRage"
-```
-
-#### **Performance Debugging**
-```lua
--- Monitor resource usage
-resmon
-
--- Check for memory leaks
-profiler save 60  # Profile for 60 seconds
-
--- Monitor network traffic
-netgraph
-```
-
-#### **Database Debugging**
-```sql
--- Check incident logging
-SELECT * FROM npc_road_rage_incidents ORDER BY timestamp DESC LIMIT 10;
-
--- Check for database errors
-SHOW ENGINE INNODB STATUS;
-```
+**Solution:**
+Use `/npcrage-stats` to check police count and system status
+</details>
 
 ---
 
-## 🔬 Advanced Setup
+## 📚 **Additional Resources**
 
-### 🎯 **Multi-Server Configuration**
+### 📖 **Documentation**
+- 📋 **[Installation Guide](INSTALL.md)** - Complete setup instructions
+- ⚙️ **[Configuration Reference](CONFIG.md)** - All settings explained  
+- 🔗 **[Discord Setup Guide](DISCORD_SETUP.md)** - Webhook configuration
+- 🔧 **[API Documentation](docs/API.md)** - Developer integration
 
-```lua
--- config.lua for multiple servers
-Config.Discord.serverName = GetConvar("server_name", "Unknown Server")
-Config.Discord.webhook = GetConvar("discord_webhook", "")
-
--- In server.cfg
-setr server_name "Your Server Name"
-setr discord_webhook "https://discord.com/api/webhooks/..."
-```
-
-### 🔄 **Custom Event Integration**
-
-```lua
--- Add custom triggers
-RegisterNetEvent('your-script:triggerRoadRage', function(coords)
-    -- Custom road rage trigger from other scripts
-    TriggerEvent('jm-npcrage:manualTrigger', coords)
-end)
-
--- Custom injury handling
-RegisterNetEvent('your-ambulance:customInjury', function(player, severity)
-    -- Handle custom injury types
-    TriggerServerEvent('jm-npcrage:customInjury', player, severity)
-end)
-```
-
-### 📊 **Statistics & Analytics**
-
-```lua
--- Enable detailed statistics
-Config.Discord.logEvents.systemStats = true
-
--- Custom analytics endpoint
-Config.Analytics = {
-    enabled = true,
-    endpoint = "https://your-analytics-server.com/api/incidents",
-    apiKey = "your-api-key"
-}
-```
-
-### 🔧 **Framework Compatibility**
-
-#### **ESX Compatibility** (Community Modification)
-```lua
--- Replace QBCore references with ESX
-local ESX = exports["es_extended"]:getSharedObject()
-
--- Modify player data access
-local PlayerData = ESX.GetPlayerData()
-
--- Adjust job checks
-if PlayerData.job.name == 'police' then
-    -- Police logic
-end
-```
+### 🎥 **Video Guides**
+- 🚀 **Installation Tutorial** - Step-by-step setup
+- ⚙️ **Configuration Walkthrough** - Customize your experience  
+- 🎮 **Demonstration** - See the system in action
 
 ---
 
-## 📞 Support & Troubleshooting
+## 🔄 **Changelog**
 
-### 🆘 **Getting Help**
+### 🎉 **v1.0.0** - *October 31, 2025* - **Initial Public Release**
 
-| Issue Type | Contact Method | Response Time |
-|------------|----------------|---------------|
-| 🐛 **Bug Reports** | [GitHub Issues](https://github.com/jonjongames1997/JM-NPCRoadRage/issues) | < 24 hours |
-| ⚙️ **Configuration Help** | [Discord Server](https://discord.gg/N9KgZx4KUn) | < 6 hours |
-| 🔧 **Technical Support** | support@jmmodifications.com | < 48 hours |
-| 💬 **General Questions** | [Community Forum](https://www.reddit.com/r/JMModifications/) | < 12 hours |
+#### ✨ **Core Features**
+- **Dynamic Road Rage System** - Intelligent NPC reactions to player driving
+- **QBCore Integration** - Seamless police and ambulance system connection
+- **Health-Based Injuries** - Realistic damage detection and medical consequences
+- **Weapon Management** - Configurable weapons with safety blacklist
+- **Discord Integration** - Advanced logging with spam prevention
 
-### 📋 **When Reporting Issues**
+#### 🛡️ **Safety Features**  
+- **Protected Safe Zones** - Hospitals, police stations, airports
+- **Weapon Blacklist** - Block dangerous weapons (RPGs, explosives, etc.)
+- **Performance Optimization** - Efficient detection and cleanup systems
+- **Anti-Spam System** - Intelligent Discord logging with cooldowns
 
-Please provide:
-1. **Server Information**
-   - FiveM artifacts version
-   - QBCore version
-   - Operating system
+#### 🔧 **Admin Tools**
+- **Testing Commands** - `/testrage`, `/clearrage`, `/npcrage-stats`
+- **Weapon Management** - `/weaponinfo`, `/reloadweapons`  
+- **Debug System** - Comprehensive logging and troubleshooting
+- **Hot Configuration** - Update settings without restart
 
-2. **Error Logs**
-   - Server console output
-   - Client F8 console errors
-   - Any database errors
+#### 🎨 **Immersion Features**
+- **Realistic Audio** - Authentic NPC rage sounds and speech
+- **Dynamic Animations** - Lifelike gestures and movements
+- **Multi-Phase Escalation** - From anger to confrontation to combat
+- **Context-Aware Behavior** - NPCs react appropriately to situations
 
-3. **Configuration**
-   - Your config.lua settings
-   - Modified files (if any)
-   - Other related resources
+---
 
-4. **Reproduction Steps**
-   - What you were doing when the issue occurred
-   - Steps to reproduce the problem
-   - Expected vs actual behavior
+## 🤝 **Support & Community**
 
-### 📚 **Additional Resources**
+<div align="center">
 
-- 📖 [Configuration Reference](CONFIG.md)
-- 🔗 [Discord Setup Guide](DISCORD_SETUP.md)
-- 🛠️ [API Documentation](docs/API.md)
-- 🎥 [Video Installation Guide](https://youtube.com/watch?v=example)
+### 🌟 **Join Our Community**
+
+[![Discord](https://img.shields.io/badge/Discord-Join_Server-7289da.svg?style=for-the-badge&logo=discord)](https://discord.gg/jmmodifications)
+[![GitHub](https://img.shields.io/badge/GitHub-Issues_&_Discussions-black.svg?style=for-the-badge&logo=github)](https://github.com/jmmodifications/jm-npcroadvage)
+
+**Get Help • Share Feedback • Request Features • Showcase Your Server**
+
+</div>
+
+### 📞 **Support Channels**
+
+| Platform | Best For | Response Time |
+|----------|----------|---------------|
+| 💬 **[Discord Server](https://discord.gg/jmmodifications)** | General help, community | < 6 hours |
+| 🐛 **[GitHub Issues](https://github.com/jmmodifications/jm-npcroadvage/issues)** | Bug reports, feature requests | < 24 hours |
+| 📧 **support@jmmodifications.com** | Private support, business inquiries | < 48 hours |
+
+### 🤝 **Contributing**
+
+We welcome community contributions! Here's how you can help:
+
+- 🐛 **Report Bugs** - Help us improve by reporting issues
+- 💡 **Suggest Features** - Share ideas for new functionality  
+
+---
+
+## 🛡️ Escrowed Protected by CFX 🛡️
+- This resource is escrowed protected by CFX.
+
+## 📄 **License & Terms**
+
+### 📜 **Custom License**
+This project is licensed under the **JM Modifications License**
+
+### ✅ **Usage Rights**
+- ✅ **Free for FiveM Servers** - Use on any server without licensing fees
+- ✅ **Modification Allowed** - Customize and adapt to your needs
+
+### ❌ **Restrictions**
+- ❌ **No Resale** - Cannot be sold as a standalone product
+- ❌ **No Warranty** - Provided as-is without guarantees
+- 📝 **Attribution Required** - Credit JM Modifications in your server
+- ❌ **No Commercial Use** - Not allowed to Use on commercial FiveM servers
+- ❌ **Claiming this resource** - Not allowed to claim this resource as your own
 
 ---
 
 <div align="center">
 
-### 🎉 **Installation Complete!**
+## 🌟 **Ready to Transform Your Server?**
 
-Your JM-NPCRoadRage system is now ready to bring realistic road rage to your FiveM server!
-
-**🚗💥 Happy Road Raging! 💥🚗**
-
-[⬆️ Back to Top](#-installation-guide---jm-npcroadvage-v110)
+### **[💲Purchase Now](https://github.com/jmmodifications/jm-npcroadvage/releases/latest) • [📖 Read Docs](INSTALL.md) • [💬 Get Support](https://discord.gg/jmmodifications)**
 
 ---
 
+### 💖 **If this script enhanced your server experience, please consider:**
+⭐ **[Starring the repository](https://github.com/jmmodifications/jm-npcroadvage/stargazers)**  
+💬 **[Joining our Discord community](https://discord.gg/jmmodifications)**  
+📝 **[Sharing feedback and suggestions](https://github.com/jmmodifications/jm-npcroadvage/discussions)**
+
+---
+
+**Created with ❤️ by [JM Modifications](https://jmmodifications.com)**  
+*Professional FiveM Development • Custom Scripts • Server Optimization*
+
+**© 2025 JM Modifications. Released under MIT License.**
+
+[⬆️ Back to Top](#-jm-npcroadvage---advanced-fivem-road-rage-system)
+
+</div>
+
+---
+
+## 🌟 Features
+
+### 🎯 **Core Functionality**
+- **🚗 Dynamic Road Rage Detection** - NPCs react to collisions, aggressive driving, and traffic incidents
+- **🤖 Intelligent NPC Behavior** - Multi-phase rage system with realistic escalation patterns
+- **⚔️ Combat System** - Varied weapon usage and combat scenarios with balanced difficulty
+- **🏥 Realistic Injury System** - Health-based injury detection with medical consequences
+
+### 🛡️ **Safety & Integration**
+- **� Police Integration** - Seamless integration with QBCore police systems
+- **🚫 Protected Safe Zones** - Configurable blacklisted areas (hospitals, police stations, airports)
+- **📊 Performance Optimized** - Efficient detection algorithms with automatic cleanup systems
+- **🔧 Admin Controls** - Comprehensive admin commands for testing and management
+
+### 🎨 **Immersion Features**
+- **🎵 Audio System** - Realistic NPC rage sounds and ambient speech
+- **🎭 Animation System** - Dynamic gesture and movement animations
+- **📍 Location Awareness** - Intelligent area detection and context-sensitive behavior
+- **⏰ Time-Based Events** - Rage timeout and escalation timing systems
+
+### 📝 **Logging & Monitoring**
+- **🔗 Discord Integration** - Advanced webhook logging with spam prevention
+- **📊 Statistical Tracking** - Incident logging and performance monitoring
+- **🛡️ Anti-Spam System** - Intelligent log combining and cooldown management
+- **🌙 Quiet Hours** - Configurable reduced logging during off-peak times
+
+---
+
+## 🚀 Installation
+
+### Prerequisites
+Ensure you have the following dependencies installed:
+
+| Dependency | Required | Purpose |
+|------------|----------|---------|
+| [QBCore Framework](https://github.com/qbcore-framework) | ✅ **Required** | Core framework |
+| [qb-policejob](https://github.com/qbcore-framework/qb-policejob) | ✅ **Required** | Police notifications |
+| [qb-ambulancejob](https://github.com/qbcore-framework/qb-ambulancejob) | ✅ **Required** | Injury system |
+| [qb-target](https://github.com/qbcore-framework/qb-target) | ⚠️ Optional | Enhanced interactions |
+
+### Quick Setup
+
+1. **Download & Extract**
+   ```bash
+   # Clone the repository
+   git clone https://github.com/your-repo/JM-NPCRoadRage.git
+   ```
+
+2. **Install to Server**
+   ```bash
+   # Move to your resources folder
+   mv JM-NPCRoadRage [server-path]/resources/
+   ```
+
+3. **Add to server.cfg**
+   ```cfg
+   ensure jm-npcrage
+   ```
+
+4. **Configure Settings**
+   - Edit `config.lua` with your preferred settings
+   - Configure Discord webhook (optional but recommended)
+   - Set up safe zones for your server layout
+
+5. **Database Setup** (Optional)
+   ```sql
+   # Import database.sql if you want incident logging
+   source database.sql
+   ```
+
+6. **Restart Server**
+   ```bash
+   restart jm-npcrage
+   ```
+
+---
+
+## ⚙️ Configuration
+
+### 🎯 **Core Settings**
+
+```lua
+-- Road Rage Behavior
+Config.RoadRageChance = 15        -- Trigger probability (1-100%)
+Config.AttackChance = 70          -- Combat vs. verbal confrontation
+Config.WeaponChance = 40          -- Armed vs. unarmed attacks
+Config.InjuryChance = 30          -- Player injury probability
+
+-- Performance & Limits
+Config.MaxRageNPCs = 5            -- Concurrent rage NPCs
+Config.TriggerDistance = 20.0     -- Detection radius
+Config.RageTimeout = 30000        -- Duration before NPCs calm down
+```
+
+### 🚫 **Safe Zones Configuration**
+
+```lua
+Config.BlacklistedAreas = {
+    {x = -545.0, y = -204.0, z = 38.0, radius = 100.0}, -- Hospital
+    {x = 440.0, y = -982.0, z = 30.0, radius = 150.0},  -- Police Station
+    {x = -1037.0, y = -2737.0, z = 20.0, radius = 200.0}, -- Airport
+    -- Add your custom safe zones here
+}
+```
+
+### 🔗 **Discord Integration**
+
+```lua
+Config.Discord = {
+    enabled = true,
+    webhook = "YOUR_WEBHOOK_URL_HERE",
+    
+    -- Anti-Spam Protection
+    spamPrevention = {
+        enabled = true,
+        cooldownTime = 60000,      -- 60 seconds between similar logs
+        maxLogsPerMinute = 5,      -- Rate limiting
+        combineIncidents = true,   -- Group multiple incidents
+        
+        -- Quiet Hours (Optional)
+        quietHours = {
+            enabled = false,
+            startHour = 2,         -- 2 AM
+            endHour = 8,           -- 8 AM
+        }
+    }
+}
+```
+
+---
+
+## 📖 Documentation
+
+### 🎮 **Commands**
+
+| Command | Permission | Description |
+|---------|------------|-------------|
+| `/testrage` | Admin | Trigger road rage on nearby NPC |
+| `/clearrage` | Admin | Clear all active road rage NPCs |
+| `/npcrage-stats` | Admin | View system statistics |
+| `/npcrage-toggle` | Admin | Toggle system on/off |
+| `/reloadweapons` | Admin | Reload weapon list after config changes |
+| `/weaponinfo` | Admin | Show weapon statistics and blacklist info |
+
+### 🔄 **Events**
+
+#### Client Events
+```lua
+-- Police response notification
+TriggerEvent('jm-npcrage:policeResponse', coords)
+
+-- Police alert system
+TriggerEvent('jm-npcrage:policeAlert', alertData)
+```
+
+#### Server Events
+```lua
+-- Notify police of incident
+TriggerServerEvent('jm-npcrage:notifyPolice', coords)
+
+-- Apply injury to player (health-verified)
+TriggerServerEvent('jm-npcrage:injurePlayer')
+
+-- Log incident with Discord integration
+TriggerServerEvent('jm-npcrage:logIncident', incidentData)
+```
+
+### 🔧 **Customization**
+
+#### Adding Custom Weapons
+```lua
+Config.RageWeapons = {
+    'WEAPON_KNIFE',
+    'WEAPON_BAT',
+    'WEAPON_CROWBAR',
+    'WEAPON_HAMMER',
+    'WEAPON_PISTOL',
+    'WEAPON_MICROSMG',
+    'WEAPON_CUSTOMWEAPON', -- Add your custom weapons
+}
+```
+
+#### Blacklisting Dangerous Weapons
+```lua
+Config.BlacklistedWeapons = {
+    'WEAPON_STICKYBOMB',        -- Sticky bombs
+    'WEAPON_GRENADELAUNCHER',   -- Grenade launcher
+    'WEAPON_RPG',               -- RPG
+    'WEAPON_MINIGUN',           -- Minigun
+    'WEAPON_RAILGUN',           -- Railgun
+    'WEAPON_HOMINGLAUNCHER',    -- Homing launcher
+    'WEAPON_GRENADE',           -- Hand grenades
+    'WEAPON_PROXMINE',          -- Proximity mines
+    'WEAPON_MOLOTOV',           -- Molotov cocktails
+    'WEAPON_CUSTOMPOWERFUL',    -- Add any overpowered weapons
+}
+```
+
+> 💡 **Tip**: The blacklist takes priority over the weapon list. If a weapon appears in both lists, it will be filtered out and NPCs won't use it.
+
+#### Creating Custom Safe Zones
+```lua
+-- Hospital example
+{x = -545.0, y = -204.0, z = 38.0, radius = 100.0}
+
+-- Police station with larger radius
+{x = 440.0, y = -982.0, z = 30.0, radius = 150.0}
+
+-- Custom business location
+{x = 123.45, y = -678.90, z = 21.0, radius = 75.0}
+```
+
+---
+
+## 🔍 How It Works
+
+### 🎯 **Detection Phase**
+1. **Continuous Monitoring** - Script monitors player driving behavior every second
+2. **Collision Detection** - Identifies vehicle collisions and aggressive maneuvers
+3. **Proximity Analysis** - Checks for nearby NPCs within trigger distance
+4. **Area Validation** - Ensures incident isn't in a blacklisted safe zone
+
+### ⚡ **Escalation System**
+```
+🚗 Incident Detected → 😠 NPC Anger → 🚪 Exit Vehicle → 🚶 Approach Player
+                                                      ↓
+🏃 Flee/Calm ← ⏱️ Timeout ← 🤜 Combat Phase ← 🎲 Decision (Attack/Yell)
+```
+
+### 🏥 **Injury Mechanics**
+- **Real-time Health Monitoring** - Tracks player health during combat
+- **Damage Verification** - Only triggers injuries when actual damage occurs
+- **Medical Integration** - Seamlessly works with QBCore ambulance system
+- **Realistic Consequences** - Appropriate injury levels based on weapon type
+
+---
+
+## 📊 Performance
+
+### ⚡ **Optimization Features**
+- **Smart Detection** - 1-second interval monitoring with efficient proximity checks
+- **Automatic Cleanup** - Inactive NPCs are automatically removed
+- **Resource Management** - Configurable limits prevent server overload
+- **Memory Efficiency** - Optimized data structures and garbage collection
+
+### 📈 **Performance Metrics**
+- **CPU Usage**: < 0.01ms per tick average
+- **Memory Usage**: ~2MB baseline
+- **Network Traffic**: Minimal (event-driven architecture)
+- **Database Impact**: Optional logging with batch operations
+
+---
+
+## 🔧 Advanced Features
+
+### 🤖 **AI Behavior System**
+- **Dynamic Decision Making** - NPCs make contextual choices based on situation
+- **Weapon Preference** - Different NPC types prefer different weapon categories
+- **Escalation Patterns** - Realistic progression from verbal to physical confrontation
+- **Flee Mechanics** - Smart retreat behavior when overwhelmed
+
+### 📝 **Enhanced Logging**
+- **Incident Correlation** - Links related events for better analysis
+- **Player Tracking** - Monitors repeat offenders and patterns
+- **Statistical Analysis** - Comprehensive data collection for server optimization
+- **Export Capabilities** - Easy data export for external analysis
+
+---
+
+## 🛠️ Troubleshooting
+
+### ❗ **Common Issues**
+
+<details>
+<summary>🔍 <strong>NPCs not responding to collisions</strong></summary>
+
+**Possible Causes:**
+- Vehicle speed too low
+- In blacklisted area
+- Maximum NPCs already active
+
+**Solutions:**
+1. Check `Config.TriggerDistance` value
+2. Verify area isn't in `Config.BlacklistedAreas`
+3. Increase `Config.MaxRageNPCs` limit
+4. Use `/testrage` to manually trigger
+</details>
+
+<details>
+<summary>🔍 <strong>Injury notifications appearing without damage</strong></summary>
+
+**Status:** ✅ **FIXED** in v1.1.0
+
+This issue has been resolved with the new health-based injury detection system. Injuries now only trigger when players actually take damage.
+</details>
+
+<details>
+<summary>🔍 <strong>Discord webhook spam</strong></summary>
+
+**Status:** ✅ **FIXED** in v1.1.0
+
+Comprehensive spam prevention system implemented:
+- Cooldown timers between similar logs
+- Rate limiting (configurable)
+- Incident combining for multiple events
+- Quiet hours support
+</details>
+
+<details>
+<summary>🔍 <strong>Police not being notified</strong></summary>
+
+**Possible Causes:**
+- Insufficient police online
+- qb-policejob not properly configured
+- Police job name mismatch
+
+**Solutions:**
+1. Check `Config.MinPoliceOnline` setting
+2. Verify `Config.PoliceJob` matches your setup
+3. Ensure qb-policejob is running properly
+</details>
+
+### 🐛 **Debug Mode**
+Enable debug logging by adding to your `server.cfg`:
+```cfg
+setr jm_npcrage_debug "true"
+```
+
+---
+
+## 🔄 Changelog
+
+### 🎉 **v1.0.0** - *October 31, 2025*
+#### 🆕 **New Features**
+- **Basic road rage functionality**
+- **Police integration**
+- **Injury system**
+- **Admin commands**
+- **Discord logging**
+- **Health-Based Injury System** - Injuries only trigger when player actually takes damage
+- **Advanced Spam Prevention** - Comprehensive Discord logging controls
+- **Weapon Blacklist System** - Filter out dangerous weapons (explosives, heavy weapons, etc.)
+- **Incident Combining** - Multiple events grouped into single logs
+- **Quiet Hours Support** - Reduced logging during specified times
+- **Enhanced Admin Tools** - Improved statistics and monitoring
+- **Weapon Management Commands** - `/reloadweapons` and `/weaponinfo` for weapon control
+
+#### 🔧 **Improvements**
+- Real-time health monitoring during combat
+- Server-side health verification for injuries
+- Configurable cooldown timers for Discord logs
+- Rate limiting for webhook calls
+- Better error handling and logging
+- Automatic weapon filtering on resource start
+- Fallback to fists when no weapons are available
+
+#### 🐛 **Bug Fixes**
+- Fixed injury notifications when player not actually hurt
+- Resolved Discord webhook spam issues
+- Improved NPC cleanup system
+- Fixed rare memory leaks
+
+
+---
+
+## 🤝 Support
+
+### 📞 **Getting Help**
+
+| Platform | Link | Response Time |
+|----------|------|---------------|
+| 💬 **Discord** | [Join Server](https://discord.gg/N9KgZx4KUn) | < 24 hours |
+| 🐛 **GitHub Issues** | [Report Bug](https://github.com/jonjongames1997/JM-NPCRoadRage/issues) | < 48 hours |
+| 📧 **Email** | support@jmmodifications.com | < 72 hours |
+
+### 📚 **Documentation**
+- [Installation Guide](INSTALL.md)
+- [Configuration Reference](CONFIG.md)
+- [Discord Setup](DISCORD_SETUP.md)
+- [API Documentation](docs/API.md)
+
+### 🤝 **Contributing**
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### 📝 **Terms of Use**
+- ❌ **Commercial Use** - Allowed for FiveM servers
+- ✅ **Modification** - Freely modify and adapt
+- ❌ **Distribution** - Share with proper attribution
+- ❌ **Resale** - Do not sell as standalone product
+
+---
+
+<div align="center">
+
+### 🌟 **Star this project if you find it useful!**
+
 **Created with ❤️ by JM Modifications**
+
+[⬆️ Back to Top](#-jm-npcroadvage---advanced-fivem-road-rage-system)
 
 </div>
