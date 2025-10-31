@@ -609,10 +609,10 @@ end
 
 | Issue Type | Contact Method | Response Time |
 |------------|----------------|---------------|
-| 🐛 **Bug Reports** | [GitHub Issues](https://github.com/your-repo/issues) | < 24 hours |
-| ⚙️ **Configuration Help** | [Discord Server](https://discord.gg/your-server) | < 6 hours |
+| 🐛 **Bug Reports** | [GitHub Issues](https://github.com/jonjongames1997/JM-NPCRoadRage/issues) | < 24 hours |
+| ⚙️ **Configuration Help** | [Discord Server](https://discord.gg/N9KgZx4KUn) | < 6 hours |
 | 🔧 **Technical Support** | support@jmmodifications.com | < 48 hours |
-| 💬 **General Questions** | [Community Forum](https://forum.yoursite.com) | < 12 hours |
+| 💬 **General Questions** | [Community Forum](https://www.reddit.com/r/JMModifications/) | < 12 hours |
 
 ### 📋 **When Reporting Issues**
 
