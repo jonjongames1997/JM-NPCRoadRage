@@ -247,7 +247,7 @@ Config.RageWeapons = {
    }
    ```
 
-### 🛡️ **Anti-Spam Configuration** (New in v1.1.0)
+### 🛡️ **Anti-Spam Configuration**
 
 ```lua
 Config.Discord.spamPrevention = {
@@ -322,7 +322,7 @@ Config.Discord.mentionRoles = {
 2. **Combat System Test**
    - Let NPC attack you
    - Check injury system activation
-   - Verify health-based injury detection (v1.1.0)
+   - Verify health-based injury detection
 
 3. **Police Integration Test**
    - Ensure police players are online
@@ -470,7 +470,7 @@ Config.MaxRageNPCs = 10      -- Allow more NPCs
 **Solutions:**
 1. Ensure qb-ambulancejob is installed
 2. Check `Config.InjuryChance` setting
-3. Verify player actually took damage (new in v1.1.0)
+3. Verify player actually took damage
 
 **Debug:**
 ```lua
