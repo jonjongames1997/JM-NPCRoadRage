@@ -1,3 +1,5 @@
+A premium FiveM script that adds intelligent NPC road rage reactions to aggressive driving, featuring QBCore integration, realistic combat escalation, and comprehensive safety systems.
+
 # 🚀 Installation Guide - JM-NPCRoadRage v1.0.0
 
 <div align="center">
