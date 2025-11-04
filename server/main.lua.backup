@@ -1,0 +1,777 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
+-- Discord spam prevention tracking
+local discordLogCooldowns = {}
+local discordLogCounts = {}
+local pendingIncidents = {} -- For combining incidents
+
+-- Initialize spam prevention counters
+CreateThread(function()
+    while true do
+        Wait(60000) -- Reset every minute
+        discordLogCounts = {}
+    end
+end)
+
+-- Police notification system
+RegisterNetEvent('jm-npcrage:notifyPolice', function(coords)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    
+    if not Player then return end
+    
+    -- Check if minimum police are online
+    local policeOnline = GetPoliceOnlineCount()
+    
+    if policeOnline < Config.MinPoliceOnline then
+        return
+    end
+    
+    -- Create police alert
+    local alertData = {
+        title = "Road Rage Incident",
+        message = "Reports of aggressive driver attacking civilians",
+        coords = coords,
+        priority = 2, -- Medium priority
+        code = "10-54", -- Possible assault
+        source = src
+    }
+    
+    -- Send alert to all online police
+    TriggerClientEvent('jm-npcrage:policeAlert', -1, alertData)
+    
+    -- Enhanced Discord logging for police notification
+    local discordData = {
+        player = {
+            name = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+            id = src,
+            citizenid = Player.PlayerData.citizenid
+        },
+        coords = coords,
+        policeNotified = true,
+        policeOnline = policeOnline
+    }
+    
+    local fields = CreateDiscordFields(discordData)
+    
+    SendDiscordLog(
+        "policeNotifications",
+        "🚔 Police Dispatch Alert",
+        string.format("**Code 10-54** - Road rage incident reported\n\n**Responding Units:** %d officers available", policeOnline),
+        fields,
+        Config.Discord.colors.police
+    )
+    
+    -- Log incident
+    print(string.format('[JM-NPCRoadRage] Road rage incident reported at %s, %s, %s', 
+          coords.x, coords.y, coords.z))
+    
+    -- Schedule police response
+    CreateThread(function()
+        Wait(Config.PoliceResponseTime)
+        TriggerClientEvent('jm-npcrage:policeResponse', src, coords)
+    end)
+end)
+
+-- Player injury system (improved)
+RegisterNetEvent('jm-npcrage:injurePlayer', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    
+    if not Player then return end
+    
+    -- Double-check player health before applying injury
+    local playerPed = GetPlayerPed(src)
+    local currentHealth = GetEntityHealth(playerPed)
+    local maxHealth = GetEntityMaxHealth(playerPed)
+    
+    -- Only apply injury if player actually has reduced health
+    if currentHealth >= maxHealth then
+        print(string.format('[JM-NPCRoadRage] Injury blocked for %s - no health damage detected', Player.PlayerData.name))
+        return
+    end
+    
+    -- Apply injury effects (works with qb-ambulancejob)
+    local injuryLevel = math.random(1, 4)
+    TriggerClientEvent('hospital:client:SetInjury', src, 'head', injuryLevel)
+    TriggerClientEvent('QBCore:Notify', src, 'You have been injured in the road rage incident!', 'error', 8000)
+    
+    -- Optional: Add stress if using qb-hud stress system
+    TriggerClientEvent('hud:client:UpdateStress', src, math.random(15, 30))
+    
+    -- Enhanced Discord logging for player injury (with spam prevention)
+    local discordData = {
+        player = {
+            name = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+            id = src,
+            citizenid = Player.PlayerData.citizenid
+        },
+        coords = GetEntityCoords(GetPlayerPed(src)),
+        additional = {
+            {
+                ["name"] = "🏥 Injury Type",
+                ["value"] = "Head injury (severity: " .. injuryLevel .. "/4)",
+                ["inline"] = true
+            },
+            {
+                ["name"] = "💊 Medical Attention",
+                ["value"] = "Required",
+                ["inline"] = true
+            },
+            {
+                ["name"] = "❤️ Health Status",
+                ["value"] = string.format("%.0f/%.0f HP", currentHealth, maxHealth),
+                ["inline"] = true
+            }
+        }
+    }
+    
+    local fields = CreateDiscordFields(discordData)
+    
+    SendDiscordLog(
+        "playerInjuries",
+        "🚑 Player Injured",
+        "**Medical Emergency** - Player injured during road rage incident and requires medical attention.",
+        fields,
+        Config.Discord.colors.injury
+    )
+    
+    -- Log injury
+    print(string.format('[JM-NPCRoadRage] Player %s (%s) injured in road rage incident (Health: %.0f/%.0f)', 
+          Player.PlayerData.name, Player.PlayerData.citizenid, currentHealth, maxHealth))
+end)
+
+-- Utility functions
+function GetPoliceOnlineCount()
+    local policeCount = 0
+    local players = QBCore.Functions.GetPlayers()
+    
+    for _, playerId in pairs(players) do
+        local Player = QBCore.Functions.GetPlayer(playerId)
+        if Player and Player.PlayerData.job.name == Config.PoliceJob and Player.PlayerData.job.onduty then
+            policeCount = policeCount + 1
+        end
+    end
+    
+    return policeCount
+end
+
+-- Police alert system for qb-policejob integration
+RegisterNetEvent('jm-npcrage:policeAlert', function(alertData)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    
+    if not Player then return end
+    
+    -- Only send to police
+    if Player.PlayerData.job.name == Config.PoliceJob and Player.PlayerData.job.onduty then
+        TriggerClientEvent('qb-policejob:client:policeAlert', src, alertData)
+    end
+end)
+
+-- Troll cop event handler
+RegisterNetEvent('jm-npcrage:trollCopTriggered', function(data)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    
+    if not Player then return end
+    
+    -- Enhanced Discord logging for troll cop event
+    local discordData = {
+        player = {
+            name = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+            id = src,
+            citizenid = Player.PlayerData.citizenid
+        },
+        coords = data.playerCoords,
+        additional = {
+            {
+                ["name"] = "🚨 Troll Cop Event",
+                ["value"] = "TRIGGERED",
+                ["inline"] = true
+            },
+            {
+                ["name"] = "📍 Jurisdiction",
+                ["value"] = data.jurisdiction,
+                ["inline"] = true
+            },
+            {
+                ["name"] = "👮 Cops Spawned",
+                ["value"] = tostring(data.copCount),
+                ["inline"] = true
+            },
+            {
+                ["name"] = "⚠️ Warning",
+                ["value"] = "This is a troll/entertainment feature",
+                ["inline"] = false
+            }
+        }
+    }
+    
+    local fields = CreateDiscordFields(discordData)
+    
+    SendDiscordLog(
+        "adminActions",
+        "🚨 Troll Cops Activated",
+        string.format("**Troll cop event triggered!** %d officers spawned in %s jurisdiction.", 
+                     data.copCount, data.jurisdiction),
+        fields,
+        16711680 -- Red color for troll events
+    )
+    
+    -- Log to console
+    print(string.format('[JM-NPCRoadRage] Troll cops triggered for %s (%s) in %s - %d cops spawned', 
+          Player.PlayerData.name, Player.PlayerData.citizenid, data.jurisdiction, data.copCount))
+    
+    -- Notify all admins online about the troll cop event
+    local players = QBCore.Functions.GetPlayers()
+    for _, playerId in pairs(players) do
+        local AdminPlayer = QBCore.Functions.GetPlayer(playerId)
+        if AdminPlayer and AdminPlayer.PlayerData.job.name == 'admin' then
+            TriggerClientEvent('QBCore:Notify', playerId, 
+                string.format('Troll cops triggered by %s in %s', Player.PlayerData.name, data.jurisdiction), 
+                'primary', 5000)
+        end
+    end
+end)
+
+-- Admin commands
+QBCore.Commands.Add('npcrage-stats', 'View road rage statistics (Admin Only)', {}, false, function(source, args)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not Player then return end
+    
+    -- Check if admin (you may need to adjust this based on your permission system)
+    if Player.PlayerData.job.name ~= 'admin' and not QBCore.Functions.HasPermission(source, 'admin') then
+        TriggerClientEvent('QBCore:Notify', source, 'You don\'t have permission to use this command', 'error')
+        return
+    end
+    
+    local policeOnline = GetPoliceOnlineCount()
+    local stats = {
+        policeOnline = policeOnline,
+        minPoliceRequired = Config.MinPoliceOnline,
+        rageChance = Config.RoadRageChance,
+        maxRageNPCs = Config.MaxRageNPCs
+    }
+    
+    -- Discord logging for admin action
+    local discordData = {
+        player = {
+            name = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+            id = source,
+            citizenid = Player.PlayerData.citizenid
+        },
+        additional = {
+            {
+                ["name"] = "📊 Command Used",
+                ["value"] = "/npcrage-stats",
+                ["inline"] = true
+            },
+            {
+                ["name"] = "👮 Police Online",
+                ["value"] = string.format("%d/%d", policeOnline, Config.MinPoliceOnline),
+                ["inline"] = true
+            },
+            {
+                ["name"] = "🎲 Rage Chance",
+                ["value"] = Config.RoadRageChance .. "%",
+                ["inline"] = true
+            },
+            {
+                ["name"] = "🤖 Max NPCs",
+                ["value"] = tostring(Config.MaxRageNPCs),
+                ["inline"] = true
+            }
+        }
+    }
+    
+    local fields = CreateDiscordFields(discordData)
+    
+    SendDiscordLog(
+        "adminActions",
+        "👨‍💼 Admin Command Used",
+        "Administrator viewed road rage system statistics.",
+        fields,
+        Config.Discord.colors.admin
+    )
+    
+    TriggerClientEvent('QBCore:Notify', source, 
+        string.format('Road Rage Stats: Police Online: %d/%d, Rage Chance: %d%%, Max NPCs: %d', 
+                     stats.policeOnline, stats.minPoliceRequired, stats.rageChance, stats.maxRageNPCs), 
+        'primary', 10000)
+end)
+
+QBCore.Commands.Add('npcrage-toggle', 'Toggle road rage system (Admin Only)', {}, false, function(source, args)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not Player then return end
+    
+    if Player.PlayerData.job.name ~= 'admin' and not QBCore.Functions.HasPermission(source, 'admin') then
+        TriggerClientEvent('QBCore:Notify', source, 'You don\'t have permission to use this command', 'error')
+        return
+    end
+    
+    -- Discord logging for admin action
+    local discordData = {
+        player = {
+            name = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+            id = source,
+            citizenid = Player.PlayerData.citizenid
+        },
+        additional = {
+            {
+                ["name"] = "📊 Command Used",
+                ["value"] = "/npcrage-toggle",
+                ["inline"] = true
+            },
+            {
+                ["name"] = "⚠️ Note",
+                ["value"] = "Global state management needs implementation",
+                ["inline"] = false
+            }
+        }
+    }
+    
+    local fields = CreateDiscordFields(discordData)
+    
+    SendDiscordLog(
+        "adminActions",
+        "👨‍💼 Admin Command Used",
+        "Administrator attempted to toggle road rage system.",
+        fields,
+        Config.Discord.colors.admin
+    )
+    
+    -- Toggle system (you can implement a global variable to enable/disable)
+    TriggerClientEvent('QBCore:Notify', source, 'Road rage system toggle - implement global state management', 'info')
+end)
+
+-- Webhook logging (enhanced with spam prevention)
+function CanSendDiscordLog(logType)
+    if not Config.Discord.enabled or Config.Discord.webhook == "" then 
+        return false
+    end
+    
+    -- Check if this log type is enabled
+    if not Config.Discord.logEvents[logType] then
+        return false
+    end
+    
+    -- Check spam prevention settings
+    if not Config.Discord.spamPrevention.enabled then
+        return true
+    end
+    
+    -- Check quiet hours
+    if Config.Discord.spamPrevention.quietHours.enabled then
+        local currentHour = tonumber(os.date("%H"))
+        local startHour = Config.Discord.spamPrevention.quietHours.startHour
+        local endHour = Config.Discord.spamPrevention.quietHours.endHour
+        
+        local isQuietTime = false
+        if startHour <= endHour then
+            isQuietTime = currentHour >= startHour and currentHour < endHour
+        else
+            isQuietTime = currentHour >= startHour or currentHour < endHour
+        end
+        
+        if isQuietTime then
+            for _, reducedType in pairs(Config.Discord.spamPrevention.quietHours.reducedTypes) do
+                if logType == reducedType then
+                    return false
+                end
+            end
+        end
+    end
+    
+    -- Check cooldowns
+    local currentTime = GetGameTimer()
+    if discordLogCooldowns[logType] and 
+       (currentTime - discordLogCooldowns[logType]) < Config.Discord.spamPrevention.cooldownTime then
+        return false
+    end
+    
+    -- Check rate limits
+    if not discordLogCounts[logType] then
+        discordLogCounts[logType] = 0
+    end
+    
+    if discordLogCounts[logType] >= Config.Discord.spamPrevention.maxLogsPerMinute then
+        return false
+    end
+    
+    return true
+end
+
+function UpdateDiscordLogTracking(logType)
+    if Config.Discord.spamPrevention.enabled then
+        discordLogCooldowns[logType] = GetGameTimer()
+        if not discordLogCounts[logType] then
+            discordLogCounts[logType] = 0
+        end
+        discordLogCounts[logType] = discordLogCounts[logType] + 1
+    end
+end
+
+function SendDiscordLog(logType, title, message, fields, color)
+    if not CanSendDiscordLog(logType) then
+        -- If spam prevention blocks the log, check if we should combine incidents
+        if Config.Discord.spamPrevention.combineIncidents and logType == "roadRageIncidents" then
+            CombineIncident(title, message, fields, color)
+        end
+        return
+    end
+    
+    local embeds = {
+        {
+            ["title"] = title,
+            ["description"] = message,
+            ["type"] = "rich",
+            ["color"] = color or Config.Discord.colors.system,
+            ["fields"] = fields or {},
+            ["footer"] = {
+                ["text"] = "JM NPC Road Rage System • " .. Config.Discord.serverName,
+            },
+            ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+        }
+    }
+    
+    -- Add thumbnail if enabled
+    if Config.Discord.includeThumbnail then
+        embeds[1]["thumbnail"] = {
+            ["url"] = "https://i.imgur.com/4M34hi2.png" -- Default road rage icon
+        }
+    end
+    
+    local payload = {
+        username = Config.Discord.botName,
+        embeds = embeds
+    }
+    
+    -- Add avatar if configured
+    if Config.Discord.avatar and Config.Discord.avatar ~= "" then
+        payload.avatar_url = Config.Discord.avatar
+    end
+    
+    -- Add role mentions if configured
+    local content = ""
+    if logType == "adminActions" and Config.Discord.mentionRoles.adminRole ~= "" then
+        content = string.format("<@&%s>", Config.Discord.mentionRoles.adminRole)
+    elseif logType == "policeNotifications" and Config.Discord.mentionRoles.policeRole ~= "" then
+        content = string.format("<@&%s>", Config.Discord.mentionRoles.policeRole)
+    end
+    
+    if content ~= "" then
+        payload.content = content
+    end
+    
+    -- Update tracking before sending
+    UpdateDiscordLogTracking(logType)
+    
+    PerformHttpRequest(Config.Discord.webhook, function(statusCode, responseText, headers) 
+        -- Discord returns 204 No Content on success. Accept both 200 and 204 as success.
+        if statusCode ~= 200 and statusCode ~= 204 then
+            print(string.format('^1[JM-NPCRoadRage] Discord webhook error: status=%s, response=%s^7', tostring(statusCode), tostring(responseText)))
+        end
+    end, 'POST', json.encode(payload), { 
+        ['Content-Type'] = 'application/json' 
+    })
+end
+
+-- Function to combine multiple incidents into a single log
+function CombineIncident(title, message, fields, color)
+    if not pendingIncidents.count then
+        pendingIncidents.count = 0
+        pendingIncidents.lastTime = GetGameTimer()
+    end
+    
+    pendingIncidents.count = pendingIncidents.count + 1
+    
+    -- Send combined log after 5 minutes or 10 incidents, whichever comes first
+    if pendingIncidents.count >= 10 or 
+       (GetGameTimer() - pendingIncidents.lastTime) >= 300000 then -- 5 minutes
+        
+        local combinedFields = {
+            {
+                ["name"] = "📊 Multiple Incidents",
+                ["value"] = string.format("%d road rage incidents occurred in the last few minutes", pendingIncidents.count),
+                ["inline"] = false
+            },
+            {
+                ["name"] = "⏰ Time Period",
+                ["value"] = string.format("Last %d minutes", math.floor((GetGameTimer() - pendingIncidents.lastTime) / 60000)),
+                ["inline"] = true
+            }
+        }
+        
+        SendDiscordLogDirect(
+            "roadRageIncidents",
+            "🚗💥 Multiple Road Rage Incidents",
+            string.format("**%d Road Rage Incidents** occurred recently. Logging has been combined to reduce spam.", pendingIncidents.count),
+            combinedFields,
+            Config.Discord.colors.incident
+        )
+        
+        -- Reset counter
+        pendingIncidents.count = 0
+        pendingIncidents.lastTime = GetGameTimer()
+    end
+end
+
+-- Direct send function that bypasses spam prevention (for combined logs)
+function SendDiscordLogDirect(logType, title, message, fields, color)
+    if not Config.Discord.enabled or Config.Discord.webhook == "" then 
+        return 
+    end
+    
+    local embeds = {
+        {
+            ["title"] = title,
+            ["description"] = message,
+            ["type"] = "rich",
+            ["color"] = color or Config.Discord.colors.system,
+            ["fields"] = fields or {},
+            ["footer"] = {
+                ["text"] = "JM NPC Road Rage System • " .. Config.Discord.serverName,
+            },
+            ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+        }
+    }
+    
+    -- Add thumbnail if enabled
+    if Config.Discord.includeThumbnail then
+        embeds[1]["thumbnail"] = {
+            ["url"] = "https://i.imgur.com/4M34hi2.png"
+        }
+    end
+    
+    local payload = {
+        username = Config.Discord.botName,
+        embeds = embeds
+    }
+    
+    -- Add avatar if configured
+    if Config.Discord.avatar and Config.Discord.avatar ~= "" then
+        payload.avatar_url = Config.Discord.avatar
+    end
+    
+    PerformHttpRequest(Config.Discord.webhook, function(statusCode, responseText, headers) 
+        if statusCode ~= 200 and statusCode ~= 204 then
+            print(string.format('^1[JM-NPCRoadRage] Discord webhook error: status=%s, response=%s^7', tostring(statusCode), tostring(responseText)))
+        end
+    end, 'POST', json.encode(payload), { 
+        ['Content-Type'] = 'application/json' 
+    })
+end
+
+function CreateDiscordFields(data)
+    local fields = {}
+    
+    if data.player and Config.Discord.includePlayerInfo then
+        table.insert(fields, {
+            ["name"] = "👤 Player",
+            ["value"] = string.format("%s (ID: %s)", data.player.name or "Unknown", data.player.id or "N/A"),
+            ["inline"] = true
+        })
+        
+        if data.player.citizenid then
+            table.insert(fields, {
+                ["name"] = "🆔 Citizen ID",
+                ["value"] = data.player.citizenid,
+                ["inline"] = true
+            })
+        end
+    end
+    
+    if data.coords and Config.Discord.includeCoordinates then
+        table.insert(fields, {
+            ["name"] = "📍 Location",
+            ["value"] = string.format("X: %.2f, Y: %.2f, Z: %.2f", data.coords.x, data.coords.y, data.coords.z),
+            ["inline"] = false
+        })
+    end
+    
+    if data.weapon and Config.Discord.includeWeaponInfo then
+        table.insert(fields, {
+            ["name"] = "🔫 Weapon Used",
+            ["value"] = data.weapon == "none" and "Fists" or data.weapon,
+            ["inline"] = true
+        })
+    end
+    
+    if data.policeNotified ~= nil then
+        table.insert(fields, {
+            ["name"] = "👮 Police Notified",
+            ["value"] = data.policeNotified and "✅ Yes" or "❌ No",
+            ["inline"] = true
+        })
+    end
+    
+    if data.policeOnline then
+        table.insert(fields, {
+            ["name"] = "👮 Police Online",
+            ["value"] = string.format("%d officers", data.policeOnline),
+            ["inline"] = true
+        })
+    end
+    
+    if data.additional then
+        for _, field in pairs(data.additional) do
+            table.insert(fields, field)
+        end
+    end
+    
+    return fields
+end
+
+-- Database logging (if you want to track incidents)
+RegisterNetEvent('jm-npcrage:logIncident', function(incidentData)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    
+    if not Player then return end
+    
+    -- Example database logging (adjust based on your database setup)
+    --[[
+    exports.oxmysql:execute('INSERT INTO npc_road_rage_incidents (citizenid, coords, weapon_used, police_notified, timestamp) VALUES (?, ?, ?, ?, ?)', {
+        Player.PlayerData.citizenid,
+        json.encode(incidentData.coords),
+        incidentData.weapon or 'none',
+        incidentData.policeNotified and 1 or 0,
+        os.time()
+    })
+    --]]
+    
+    -- Enhanced Discord logging for road rage incident
+    local discordData = {
+        player = {
+            name = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+            id = src,
+            citizenid = Player.PlayerData.citizenid
+        },
+        coords = incidentData.coords,
+        weapon = incidentData.weapon or "none",
+        policeNotified = incidentData.policeNotified,
+        additional = {
+            {
+                ["name"] = "⏰ Incident Time",
+                ["value"] = os.date("%Y-%m-%d %H:%M:%S"),
+                ["inline"] = true
+            },
+            {
+                ["name"] = "🎯 Incident Type",
+                ["value"] = "NPC Road Rage Attack",
+                ["inline"] = true
+            }
+        }
+    }
+    
+    local fields = CreateDiscordFields(discordData)
+    
+    local description = string.format(
+        "**Road Rage Incident Occurred**\n\nAn NPC has attacked a player due to aggressive driving behavior.\n\n**Weapon Used:** %s\n**Police Response:** %s",
+        incidentData.weapon and incidentData.weapon ~= "none" and incidentData.weapon or "Fists",
+        incidentData.policeNotified and "✅ Dispatched" or "❌ Not called"
+    )
+    
+    SendDiscordLog(
+        "roadRageIncidents",
+        "🚗💥 Road Rage Incident",
+        description,
+        fields,
+        Config.Discord.colors.incident
+    )
+end)
+
+-- Callback for checking player permissions
+QBCore.Functions.CreateCallback('jm-npcrage:hasPermission', function(source, cb, permission)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not Player then
+        cb(false)
+        return
+    end
+    
+    cb(QBCore.Functions.HasPermission(source, permission) or Player.PlayerData.job.name == 'admin')
+end)
+
+print('^2[JM-NPCRoadRage]^7 Server script loaded successfully!')
+
+-- Send startup notification to Discord
+CreateThread(function()
+    Wait(5000) -- Wait for server to fully start
+    
+    if Config.Discord.enabled and Config.Discord.webhook ~= "" then
+        local startupData = {
+            additional = {
+                {
+                    ["name"] = "🟢 Status",
+                    ["value"] = "System Online",
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "📊 Settings",
+                    ["value"] = string.format("Rage Chance: %d%%\nMax NPCs: %d\nMin Police: %d", 
+                              Config.RoadRageChance, Config.MaxRageNPCs, Config.MinPoliceOnline),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "🔧 Version",
+                    ["value"] = "v1.0.0",
+                    ["inline"] = true
+                }
+            }
+        }
+        
+        local fields = CreateDiscordFields(startupData)
+        
+        SendDiscordLog(
+            "system",
+            "🚀 Road Rage System Started",
+            string.format("**%s** road rage system has been initialized and is now monitoring traffic incidents.", 
+                         Config.Discord.serverName),
+            fields,
+            Config.Discord.colors.system
+        )
+    end
+end)
+
+-- Optional: Hourly statistics logging
+if Config.Discord.logEvents.systemStats then
+    CreateThread(function()
+        while true do
+            Wait(3600000) -- Wait 1 hour
+            
+            local policeOnline = GetPoliceOnlineCount()
+            local playerCount = #GetPlayers()
+            
+            local statsData = {
+                additional = {
+                    {
+                        ["name"] = "👥 Players Online",
+                        ["value"] = tostring(playerCount),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "👮 Police Online",
+                        ["value"] = string.format("%d/%d", policeOnline, Config.MinPoliceOnline),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "⚙️ System Status",
+                        ["value"] = "Active",
+                        ["inline"] = true
+                    }
+                }
+            }
+            
+            local fields = CreateDiscordFields(statsData)
+            
+            SendDiscordLog(
+                "systemStats",
+                "📈 Hourly Statistics",
+                "Automated system statistics report.",
+                fields,
+                Config.Discord.colors.system
+            )
+        end
+    end)
+end
